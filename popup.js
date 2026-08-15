@@ -15,7 +15,7 @@ async function send(type, extra = {}) {
 }
 
 function label(x) {
-  return ({idle:"PARADO",running:"TRABAJANDO",paused:"PAUSADO",ready:"LISTO",done:"TERMINADO",error:"ERROR"})[x] || String(x || "—").toUpperCase();
+  return ({idle:"IDLE",running:"RUNNING",paused:"PAUSED",ready:"READY",done:"DONE",error:"ERROR"})[x] || String(x || "—").toUpperCase();
 }
 
 function updateScopePreview() {
@@ -24,8 +24,8 @@ function updateScopePreview() {
   const scope = $("scope").value;
   const n = scope === "all" ? (s.scan?.songs || 0) : (s.scan?.liked || 0);
   $("scopePreview").textContent = scope === "all"
-    ? `Objetivo: 📚 ${n} canciones`
-    : `Objetivo: ❤️ ${n} canciones con Like`;
+    ? `Target: 📚 ${n} songs`
+    : `Target: ❤️ ${n} Liked songs`;
 }
 
 function render(s) {
@@ -43,17 +43,17 @@ function render(s) {
     : "00:00";
 
   if (sc.indexMode !== "full-v8" && sc.status !== "idle") {
-    $("scanMessage").innerHTML = "⚠️ Índice de una versión anterior. Haz <b>NUEVO ESCANEO COMPLETO</b> una sola vez. Después podrás alternar Likes/Todo sin volver a escanear.";
+    $("scanMessage").innerHTML = "⚠️ This index was created by an older version. Run <b>NEW FULL SCAN</b> once. After that you can switch between Likes and All without rescanning.";
   } else if (sc.status === "running") {
-    $("scanMessage").innerHTML = `Indexando en segundo plano · <b>${sc.songs || 0}</b> canciones · <b>❤️ ${sc.liked || 0}</b> Likes.`;
+    $("scanMessage").innerHTML = `Indexing in the background · <b>${sc.songs || 0}</b> songs · <b>❤️ ${sc.liked || 0}</b> Likes.`;
   } else if (sc.status === "ready") {
-    $("scanMessage").innerHTML = `✅ Índice completo preparado: <b>${sc.songs || 0}</b> canciones · <b>❤️ ${sc.liked || 0}</b> Likes. Ya no necesitas reescanear para cambiar el filtro.`;
+    $("scanMessage").innerHTML = `✅ Full index ready: <b>${sc.songs || 0}</b> songs · <b>❤️ ${sc.liked || 0}</b> Likes. You no longer need to rescan just to change the filter.`;
   } else if (sc.status === "paused") {
-    $("scanMessage").innerHTML = `⏸️ Escaneo pausado después de <b>${sc.pages || 0}</b> páginas.`;
+    $("scanMessage").innerHTML = `⏸️ Scan paused after <b>${sc.pages || 0}</b> pages.`;
   } else if (sc.status === "error") {
-    $("scanMessage").textContent = "❌ " + (sc.error || "Error") + " · puedes reanudar.";
+    $("scanMessage").textContent = "❌ " + (sc.error || "Error") + " · you can resume.";
   } else {
-    $("scanMessage").textContent = "Haz un escaneo completo. Solo hace falta una vez mientras tu biblioteca no cambie.";
+    $("scanMessage").textContent = "Run a full scan. You only need to do it again when your library changes.";
   }
 
   if (["running","paused","done","error"].includes(dl.status) && dl.scope) {
@@ -64,22 +64,22 @@ function render(s) {
   $("dlOk").textContent = dl.downloaded || 0;
   $("dlSkip").textContent = dl.skipped || 0;
   $("dlFail").textContent = dl.failed || 0;
-  $("currentSong").textContent = dl.currentTitle ? `Ahora: ${dl.currentTitle}` : "—";
+  $("currentSong").textContent = dl.currentTitle ? `Now: ${dl.currentTitle}` : "—";
 
   const total = dl.targetTotal || ($("scope").value === "all" ? (sc.songs || 0) : (sc.liked || 0));
   const pct = total ? Math.min(100, Math.round((dl.processed || 0) * 100 / total)) : 0;
   $("bar").style.width = pct + "%";
 
   if (dl.status === "running") {
-    $("downloadMessage").innerHTML = `Descargando <b>${String(dl.format || "").toUpperCase()}</b> · ${dl.scope === "all" ? "📚 Todo" : "❤️ Likes"} · ${dl.processed || 0}/${dl.targetTotal || 0} (${pct}%).`;
+    $("downloadMessage").innerHTML = `Downloading <b>${String(dl.format || "").toUpperCase()}</b> · ${dl.scope === "all" ? "📚 All" : "❤️ Likes"} · ${dl.processed || 0}/${dl.targetTotal || 0} (${pct}%).`;
   } else if (dl.status === "paused") {
-    $("downloadMessage").innerHTML = `⏸️ Cola pausada en ${dl.processed || 0}/${dl.targetTotal || 0}.`;
+    $("downloadMessage").innerHTML = `⏸️ Queue paused at ${dl.processed || 0}/${dl.targetTotal || 0}.`;
   } else if (dl.status === "done") {
-    $("downloadMessage").innerHTML = `✅ Cola terminada. ${dl.downloaded || 0} descargas · ${dl.skipped || 0} omitidas · ${dl.failed || 0} fallidas.`;
+    $("downloadMessage").innerHTML = `✅ Queue finished. ${dl.downloaded || 0} downloads · ${dl.skipped || 0} skipped · ${dl.failed || 0} failed.`;
   } else if (dl.status === "error") {
-    $("downloadMessage").textContent = "❌ " + (dl.error || "Error") + " · puedes reanudar.";
+    $("downloadMessage").textContent = "❌ " + (dl.error || "Error") + " · you can resume.";
   } else {
-    $("downloadMessage").textContent = "Por defecto descarga solo Likes. Puedes cambiar a Todo sin reescanear.";
+    $("downloadMessage").textContent = "Likes only is the default. You can switch to All without rescanning.";
   }
 
   const logs = (s.logs || []).slice(-40).map(x => `[${new Date(x.t).toLocaleTimeString()}] ${x.text}`);
@@ -88,7 +88,7 @@ function render(s) {
 
   const err = sc.status === "error" || dl.status === "error";
   const run = sc.status === "running" || dl.status === "running";
-  $("chip").textContent = err ? "Error" : run ? "En segundo plano" : "Persistido";
+  $("chip").textContent = err ? "Error" : run ? "Running in background" : "Saved";
   $("chip").className = "chip " + (err ? "bad" : run ? "warn" : "good");
 
   updateScopePreview();
@@ -105,14 +105,14 @@ async function refreshAutoDownloadStatus() {
   try {
     const r = await send("autoDownloadStatus");
     if (r?.ok && r.setting === "allow") {
-      $("autoStatus").textContent = "✅ Descargas múltiples: PERMITIDAS";
-      $("autoHelp").textContent = "No deberías tener que confirmar archivo por archivo.";
+      $("autoStatus").textContent = "✅ Multiple downloads: ALLOWED";
+      $("autoHelp").textContent = "You should not need to confirm every file individually.";
     } else {
-      $("autoStatus").textContent = "⚠️ Descargas múltiples: " + String(r?.setting || "desconocido").toUpperCase();
-      $("autoHelp").textContent = "Pulsa ACTIVAR una vez.";
+      $("autoStatus").textContent = "⚠️ Multiple downloads: " + String(r?.setting || "unknown").toUpperCase();
+      $("autoHelp").textContent = "Click ENABLE once.";
     }
   } catch (_) {
-    $("autoStatus").textContent = "⚠️ No pude comprobar el permiso.";
+    $("autoStatus").textContent = "⚠️ Could not check the permission.";
   }
 }
 
@@ -120,19 +120,19 @@ $("scope").addEventListener("change", updateScopePreview);
 
 $("newScan").onclick = async () => {
   if (!confirm(
-    "Suno Mass Backup hará un escaneo COMPLETO una vez y guardará también el estado Like de cada canción.\n\n" +
-    "Después podrás cambiar entre Solo Likes y Todas sin volver a escanear.\n\n" +
-    "El historial de descargas no se borra.\n\n¿Continuar?"
+    "Suno Mass Backup will perform one FULL scan and store the Like status of every song.\n\n" +
+    "After that you can switch between Likes only and All without rescanning.\n\n" +
+    "Your download history will not be deleted.\n\nContinue?"
   )) return;
 
   const r = await send("newScan");
-  if (!r?.ok) alert(r?.error || "No se pudo iniciar.");
+  if (!r?.ok) alert(r?.error || "Could not start the scan.");
   await refresh();
 };
 
 $("resumeScan").onclick = async () => {
   const r = await send("resumeScan");
-  if (!r?.ok) alert(r?.error || "No se pudo reanudar.");
+  if (!r?.ok) alert(r?.error || "Could not resume the scan.");
   await refresh();
 };
 
@@ -149,19 +149,19 @@ $("startDownload").onclick = async () => {
   const n = scope === "all" ? (lastState?.scan?.songs || 0) : (lastState?.scan?.liked || 0);
 
   if (!confirm(
-    `Iniciar cola ${format.toUpperCase()} para ${scope === "all" ? "TODAS" : "SOLO LIKES"}?\n\n` +
-    `Objetivo: ${n} canciones.\n` +
-    "Lo que ya esté registrado se omitirá."
+    `Start ${format.toUpperCase()} queue for ${scope === "all" ? "ALL SONGS" : "LIKES ONLY"}?\n\n` +
+    `Target: ${n} songs.\n` +
+    "Anything already recorded in download history will be skipped."
   )) return;
 
   const r = await send("startDownload", {scope, format, fallbackMp3, delayMs});
-  if (!r?.ok) alert(r?.error || "No se pudo iniciar.");
+  if (!r?.ok) alert(r?.error || "Could not start the queue.");
   await refresh();
 };
 
 $("resumeDownload").onclick = async () => {
   const r = await send("resumeDownload");
-  if (!r?.ok) alert(r?.error || "No se pudo reanudar.");
+  if (!r?.ok) alert(r?.error || "Could not resume the queue.");
   await refresh();
 };
 
@@ -172,7 +172,7 @@ $("pauseDownload").onclick = async () => {
 
 $("enableAuto").onclick = async () => {
   const r = await send("enableAutoDownloads");
-  if (!r?.ok) alert("No pude activar el permiso automático.");
+  if (!r?.ok) alert("Could not enable automatic multiple downloads.");
   await refreshAutoDownloadStatus();
 };
 
@@ -181,9 +181,9 @@ $("openSettings").onclick = async () => {
 };
 
 $("clearHistory").onclick = async () => {
-  if (!confirm("¿Borrar el historial de descargas?")) return;
+  if (!confirm("Clear the download history?")) return;
   const r = await send("clearHistory");
-  alert(r?.ok ? `Borrados ${r.count} registros.` : (r?.error || "Error"));
+  alert(r?.ok ? `Cleared ${r.count} history entries.` : (r?.error || "Error"));
 };
 
 $("exportIndex").onclick = async () => {
