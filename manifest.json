@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Suno Mass Backup",
+  "version": "1.0.0",
+  "description": "Back up your own Suno library in WAV or MP3. Download Likes by default, or your entire library.",
+  "permissions": [
+    "downloads",
+    "storage",
+    "unlimitedStorage",
+    "scripting",
+    "tabs",
+    "alarms",
+    "contentSettings",
+    "downloads.ui"
+  ],
+  "host_permissions": [
+    "https://suno.com/*",
+    "https://*.suno.com/*",
+    "https://studio-api-prod.suno.com/*",
+    "https://studio-api.prod.suno.com/*",
+    "https://cdn1.suno.ai/*",
+    "https://cdn2.suno.ai/*",
+    "https://*.suno.ai/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Suno Mass Backup",
+    "default_popup": "popup.html"
+  }
+}
