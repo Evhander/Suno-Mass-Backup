@@ -1,26 +1,26 @@
 @echo off
 setlocal EnableExtensions
 chcp 65001 >nul
-title Suno Mass Backup - Instalador rapido
+title Suno Mass Backup - Quick Installer
 
 set "SRC=%~dp0"
 set "DEST=%LOCALAPPDATA%\SunoMassBackup"
 
 echo ============================================================
-echo       SUNO MASS BACKUP - INSTALADOR RAPIDO
+echo       SUNO MASS BACKUP - QUICK INSTALLER
 echo ============================================================
 echo.
-echo Este instalador copiara la extension a:
+echo This installer will copy the extension to:
 echo %DEST%
 echo.
-echo Chrome requiere que una extension descargada desde GitHub se cargue
-echo manualmente con "Cargar descomprimida".
+echo Chrome requires GitHub-downloaded extensions to be loaded manually
+using "Load unpacked".
 echo.
 pause
 
 if not exist "%DEST%" mkdir "%DEST%"
 
-echo Copiando archivos...
+echo Copying files...
 xcopy "%SRC%manifest.json" "%DEST%\" /Y >nul
 xcopy "%SRC%background.js" "%DEST%\" /Y >nul
 xcopy "%SRC%popup.html" "%DEST%\" /Y >nul
@@ -30,12 +30,12 @@ xcopy "%SRC%popup.js" "%DEST%\" /Y >nul
 echo %DEST% | clip
 
 echo.
-echo LISTO.
+echo READY.
 echo.
-echo 1. Se abrira chrome://extensions/
-echo 2. Activa "Modo de desarrollador"
-echo 3. Pulsa "Cargar descomprimida"
-echo 4. Pega esta ruta, que ya esta en el portapapeles:
+echo 1. chrome://extensions/ will open.
+echo 2. Enable "Developer mode".
+echo 3. Click "Load unpacked".
+echo 4. Paste this path, which is already in your clipboard:
 echo.
 echo    %DEST%
 echo.
