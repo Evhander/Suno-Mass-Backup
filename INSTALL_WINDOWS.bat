@@ -14,7 +14,7 @@ echo This installer will copy the extension to:
 echo %DEST%
 echo.
 echo Chrome requires GitHub-downloaded extensions to be loaded manually
-using "Load unpacked".
+echo using "Load unpacked".
 echo.
 pause
 
