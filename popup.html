@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,125 +11,125 @@
   <header>
     <div>
       <h1>Suno Mass Backup <span>v1.0</span></h1>
-      <p>Un escaneo. Después eliges ❤️ Likes o 📚 Todo sin volver a escanear.</p>
+      <p>Scan once. Then choose ❤️ Likes or 📚 All without rescanning.</p>
     </div>
-    <div id="chip" class="chip">Cargando…</div>
+    <div id="chip" class="chip">Loading…</div>
   </header>
 
   <div class="notice">
-    <b>Puedes cerrar este popup o cambiar de pestaña.</b>
-    El escaneo y las descargas continúan en segundo plano y guardan su posición.
-    Mantén alguna pestaña de <b>suno.com</b> abierta y con tu sesión iniciada.
+    <b>You can close this popup or switch tabs.</b>
+    Scanning and downloads continue in the background and save their position.
+    Keep at least one <b>suno.com</b> tab open and signed in.
   </div>
 
   <section class="card">
-    <div class="title">1 · ÍNDICE DE BIBLIOTECA</div>
+    <div class="title">1 · LIBRARY INDEX</div>
     <div class="indexExplain">
-      Guarda <b>todas</b> tus canciones una sola vez y recuerda cuáles tienen Like.
-      Después puedes cambiar el filtro de descarga instantáneamente.
+      Indexes <b>all</b> your songs once and remembers which ones you Liked.
+      After that, you can switch the download filter instantly.
     </div>
 
     <div class="metrics">
       <div><strong id="scanSongs">0</strong><small>total</small></div>
       <div><strong id="scanLiked">0</strong><small>❤️ likes</small></div>
-      <div><strong id="scanPages">0</strong><small>páginas</small></div>
-      <div><strong id="scanStatus">—</strong><small>estado</small></div>
+      <div><strong id="scanPages">0</strong><small>pages</small></div>
+      <div><strong id="scanStatus">—</strong><small>status</small></div>
     </div>
-    <div class="timeLine">Tiempo: <b id="scanTime">00:00</b></div>
+    <div class="timeLine">Time: <b id="scanTime">00:00</b></div>
 
     <div class="row">
-      <button id="newScan" class="primary">NUEVO ESCANEO COMPLETO</button>
-      <button id="resumeScan" class="secondary">REANUDAR</button>
-      <button id="pauseScan" class="danger">PAUSAR</button>
+      <button id="newScan" class="primary">NEW FULL SCAN</button>
+      <button id="resumeScan" class="secondary">RESUME</button>
+      <button id="pauseScan" class="danger">PAUSE</button>
     </div>
     <div id="scanMessage" class="msg">—</div>
   </section>
 
   <section class="card downloadCard">
-    <div class="title">2 · DESCARGA</div>
+    <div class="title">2 · DOWNLOAD</div>
 
     <div class="controls three">
       <label>
-        Qué descargar
+        What to download
         <select id="scope">
-          <option value="liked" selected>❤️ Solo canciones con Like</option>
-          <option value="all">📚 Todas las canciones</option>
+          <option value="liked" selected>❤️ Liked songs only</option>
+          <option value="all">📚 All songs</option>
         </select>
       </label>
       <label>
-        Formato
+        Format
         <select id="format">
-          <option value="wav" selected>WAV · máxima calidad</option>
-          <option value="mp3">MP3 · más rápido</option>
+          <option value="wav" selected>WAV · maximum quality</option>
+          <option value="mp3">MP3 · faster</option>
         </select>
       </label>
       <label>
-        Pausa
+        Delay
         <select id="delay">
-          <option value="700">0,7 s</option>
-          <option value="1200" selected>1,2 s</option>
+          <option value="700">0.7 s</option>
+          <option value="1200" selected>1.2 s</option>
           <option value="2000">2 s</option>
-          <option value="3500">3,5 s</option>
+          <option value="3500">3.5 s</option>
         </select>
       </label>
     </div>
 
-    <div id="scopePreview" class="scopePreview">Objetivo: ❤️ 0 canciones</div>
+    <div id="scopePreview" class="scopePreview">Target: ❤️ 0 songs</div>
 
     <label class="check">
       <input id="fallback" type="checkbox">
-      Si un WAV falla, descargar MP3 en su lugar
+      If WAV fails, download MP3 instead
     </label>
 
     <div class="metrics">
-      <div><strong id="dlProcessed">0</strong><small>procesadas</small></div>
-      <div><strong id="dlOk">0</strong><small>descargas</small></div>
-      <div><strong id="dlSkip">0</strong><small>omitidas</small></div>
-      <div><strong id="dlFail">0</strong><small>fallidas</small></div>
+      <div><strong id="dlProcessed">0</strong><small>processed</small></div>
+      <div><strong id="dlOk">0</strong><small>downloads</small></div>
+      <div><strong id="dlSkip">0</strong><small>skipped</small></div>
+      <div><strong id="dlFail">0</strong><small>failed</small></div>
     </div>
 
     <div class="track"><div id="bar"></div></div>
     <div id="currentSong" class="current">—</div>
 
     <div class="row">
-      <button id="startDownload" class="primary">INICIAR / REINICIAR</button>
-      <button id="resumeDownload" class="secondary">REANUDAR</button>
-      <button id="pauseDownload" class="danger">PAUSAR</button>
+      <button id="startDownload" class="primary">START / RESTART</button>
+      <button id="resumeDownload" class="secondary">RESUME</button>
+      <button id="pauseDownload" class="danger">PAUSE</button>
     </div>
     <div id="downloadMessage" class="msg">—</div>
   </section>
 
   <section class="card autoCard">
     <details>
-      <summary>⚙️ Descargas automáticas de Chrome</summary>
+      <summary>⚙️ Chrome automatic downloads</summary>
       <div class="autoLine">
         <div>
-          <b id="autoStatus">Comprobando permisos…</b>
+          <b id="autoStatus">Checking permissions…</b>
           <div class="msg" id="autoHelp"></div>
         </div>
-        <button id="enableAuto" class="secondary">ACTIVAR</button>
+        <button id="enableAuto" class="secondary">ENABLE</button>
       </div>
       <div class="chromeWarn">
-        Si aparece “Guardar como” para cada archivo, desactiva una sola vez
-        <b>Preguntar dónde se guardará cada archivo antes de descargarlo</b> en Chrome.
+        If Chrome shows “Save as” for every file, disable
+        <b>Ask where to save each file before downloading</b> once in Chrome settings.
       </div>
-      <button id="openSettings" class="secondary full">ABRIR AJUSTES DE DESCARGAS</button>
+      <button id="openSettings" class="secondary full">OPEN DOWNLOAD SETTINGS</button>
     </details>
   </section>
 
   <section class="card">
     <details open>
-      <summary>Actividad reciente</summary>
+      <summary>Recent activity</summary>
       <pre id="logs"></pre>
     </details>
     <div class="row two">
-      <button id="exportIndex" class="secondary">EXPORTAR ÍNDICE JSON</button>
-      <button id="clearHistory" class="secondary">BORRAR HISTORIAL</button>
+      <button id="exportIndex" class="secondary">EXPORT INDEX JSON</button>
+      <button id="clearHistory" class="secondary">CLEAR HISTORY</button>
     </div>
   </section>
 
   <footer>
-    Herramienta no oficial. Pensada para respaldar contenido de tu propia cuenta.
+    Unofficial tool. Intended for backing up content from your own account.
   </footer>
 </main>
 <script src="popup.js"></script>
