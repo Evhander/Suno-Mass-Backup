@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Suno Mass Backup</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>Suno Mass Backup <span>v1.0</span></h1>
+      <p>Un escaneo. Después eliges ❤️ Likes o 📚 Todo sin volver a escanear.</p>
+    </div>
+    <div id="chip" class="chip">Cargando…</div>
+  </header>
+
+  <div class="notice">
+    <b>Puedes cerrar este popup o cambiar de pestaña.</b>
+    El escaneo y las descargas continúan en segundo plano y guardan su posición.
+    Mantén alguna pestaña de <b>suno.com</b> abierta y con tu sesión iniciada.
+  </div>
+
+  <section class="card">
+    <div class="title">1 · ÍNDICE DE BIBLIOTECA</div>
+    <div class="indexExplain">
+      Guarda <b>todas</b> tus canciones una sola vez y recuerda cuáles tienen Like.
+      Después puedes cambiar el filtro de descarga instantáneamente.
+    </div>
+
+    <div class="metrics">
+      <div><strong id="scanSongs">0</strong><small>total</small></div>
+      <div><strong id="scanLiked">0</strong><small>❤️ likes</small></div>
+      <div><strong id="scanPages">0</strong><small>páginas</small></div>
+      <div><strong id="scanStatus">—</strong><small>estado</small></div>
+    </div>
+    <div class="timeLine">Tiempo: <b id="scanTime">00:00</b></div>
+
+    <div class="row">
+      <button id="newScan" class="primary">NUEVO ESCANEO COMPLETO</button>
+      <button id="resumeScan" class="secondary">REANUDAR</button>
+      <button id="pauseScan" class="danger">PAUSAR</button>
+    </div>
+    <div id="scanMessage" class="msg">—</div>
+  </section>
+
+  <section class="card downloadCard">
+    <div class="title">2 · DESCARGA</div>
+
+    <div class="controls three">
+      <label>
+        Qué descargar
+        <select id="scope">
+          <option value="liked" selected>❤️ Solo canciones con Like</option>
+          <option value="all">📚 Todas las canciones</option>
+        </select>
+      </label>
+      <label>
+        Formato
+        <select id="format">
+          <option value="wav" selected>WAV · máxima calidad</option>
+          <option value="mp3">MP3 · más rápido</option>
+        </select>
+      </label>
+      <label>
+        Pausa
+        <select id="delay">
+          <option value="700">0,7 s</option>
+          <option value="1200" selected>1,2 s</option>
+          <option value="2000">2 s</option>
+          <option value="3500">3,5 s</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="scopePreview" class="scopePreview">Objetivo: ❤️ 0 canciones</div>
+
+    <label class="check">
+      <input id="fallback" type="checkbox">
+      Si un WAV falla, descargar MP3 en su lugar
+    </label>
+
+    <div class="metrics">
+      <div><strong id="dlProcessed">0</strong><small>procesadas</small></div>
+      <div><strong id="dlOk">0</strong><small>descargas</small></div>
+      <div><strong id="dlSkip">0</strong><small>omitidas</small></div>
+      <div><strong id="dlFail">0</strong><small>fallidas</small></div>
+    </div>
+
+    <div class="track"><div id="bar"></div></div>
+    <div id="currentSong" class="current">—</div>
+
+    <div class="row">
+      <button id="startDownload" class="primary">INICIAR / REINICIAR</button>
+      <button id="resumeDownload" class="secondary">REANUDAR</button>
+      <button id="pauseDownload" class="danger">PAUSAR</button>
+    </div>
+    <div id="downloadMessage" class="msg">—</div>
+  </section>
+
+  <section class="card autoCard">
+    <details>
+      <summary>⚙️ Descargas automáticas de Chrome</summary>
+      <div class="autoLine">
+        <div>
+          <b id="autoStatus">Comprobando permisos…</b>
+          <div class="msg" id="autoHelp"></div>
+        </div>
+        <button id="enableAuto" class="secondary">ACTIVAR</button>
+      </div>
+      <div class="chromeWarn">
+        Si aparece “Guardar como” para cada archivo, desactiva una sola vez
+        <b>Preguntar dónde se guardará cada archivo antes de descargarlo</b> en Chrome.
+      </div>
+      <button id="openSettings" class="secondary full">ABRIR AJUSTES DE DESCARGAS</button>
+    </details>
+  </section>
+
+  <section class="card">
+    <details open>
+      <summary>Actividad reciente</summary>
+      <pre id="logs"></pre>
+    </details>
+    <div class="row two">
+      <button id="exportIndex" class="secondary">EXPORTAR ÍNDICE JSON</button>
+      <button id="clearHistory" class="secondary">BORRAR HISTORIAL</button>
+    </div>
+  </section>
+
+  <footer>
+    Herramienta no oficial. Pensada para respaldar contenido de tu propia cuenta.
+  </footer>
+</main>
+<script src="popup.js"></script>
+</body>
+</html>
