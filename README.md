@@ -15,25 +15,32 @@ Unofficial Chrome extension for backing up audio from **your own Suno account**.
 - 429 backoff
 - Designed for very large libraries
 
-## Manual installation from GitHub
+## Installation
 
-1. Download the repository ZIP and extract it.
-2. Run `INSTALL_WINDOWS.bat`, or open `chrome://extensions/`.
+1. Click **Code → Download ZIP** on this repository and extract it.
+2. Run `INSTALL_WINDOWS.bat`, or open `chrome://extensions/` manually.
 3. Enable **Developer mode**.
-4. Click **Load unpacked**.
+4. Click **Load unpacked / Cargar descomprimida**.
 5. Select the installed extension folder.
 6. Open `suno.com`, sign in, and keep at least one Suno tab open.
 
-> Normal Chrome on Windows does not support true one-click installation of arbitrary self-hosted extensions. This project intentionally targets GitHub/manual installation rather than the Chrome Web Store.
+> Chrome on Windows does not allow arbitrary GitHub extensions to install silently. The included installer reduces the process to the minimum number of manual steps.
 
 ## How it works
 
-V8 performs one complete scan of your Suno library and stores the Like flag for every song. After that you can choose at download time between:
+Suno Mass Backup performs one complete scan of your library and stores the Like flag for every song. After that you can choose at download time between:
 
 - ❤️ **Likes only** — default
 - 📚 **All songs**
 
 Changing the download filter does not require another scan.
+
+For audio, choose:
+
+- **WAV** — maximum available quality
+- **MP3** — faster and smaller
+
+The scan and download queue are persistent, so the popup can be closed and the work can continue in the background. Download history is stored locally to avoid re-downloading files that are already recorded.
 
 ## Privacy
 
