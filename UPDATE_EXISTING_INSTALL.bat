@@ -1,18 +1,17 @@
 @echo off
-title Suno Mass Backup - Actualizacion
+title Suno Mass Backup - Update
 chcp 65001 >nul
 echo ============================================================
-echo      ACTUALIZAR SIN DESINSTALAR LA EXTENSION
+echo      UPDATE WITHOUT UNINSTALLING THE EXTENSION
 echo ============================================================
 echo.
-echo IMPORTANTE: no pulses "Quitar" en Chrome.
+echo IMPORTANT: do not click "Remove" in Chrome.
 echo.
-echo Copia los archivos de esta carpeta ENCIMA de la carpeta que Chrome
-echo ya tiene cargada, acepta reemplazar y luego pulsa RECARGAR en
-echo chrome://extensions/
+echo Copy the files from this folder OVER the folder Chrome already has
+loaded, accept replacement, and then click RELOAD in chrome://extensions/
 echo.
-echo La primera vez que pases a esta version haz un ESCANEO COMPLETO.
-echo Despues podras elegir Likes o Todo sin volver a escanear.
+echo The first time you move to this version, run one FULL SCAN.
+echo After that you can choose Likes or All without rescanning.
 echo.
 pause
 start "" chrome "chrome://extensions/"
